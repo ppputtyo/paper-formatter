@@ -6,13 +6,13 @@ use wasm_bindgen::prelude::*;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
-    to_normal: bool,
-    nl_to_space: bool,
-    restore_word: bool,
-    ignore_enters: bool,
-    enter_with_end: bool,
-    split: bool,
-    quiet_mode: bool,
+    pub to_normal: bool,
+    pub nl_to_space: bool,
+    pub restore_word: bool,
+    pub ignore_enters: bool,
+    pub enter_with_end: bool,
+    pub split: bool,
+    pub quiet_mode: bool,
 }
 
 impl Default for Config {
@@ -34,7 +34,6 @@ impl Config {
         }
     }
 
-    /// Json 文字列から Config 構造体を生成する
     pub fn from_json_str(json_str: &str) -> Config {
         serde_json::from_str(json_str).unwrap()
     }
@@ -70,31 +69,42 @@ pub fn format(text: &str, config: &Config) -> Vec<String> {
     }
 
     if config.restore_word {
-        let re = if config.ignore_enters {
-            Regex::new(r"-\n").unwrap()
-        } else {
-            Regex::new(r"-\n+").unwrap()
-        };
+        let re = Regex::new(r"-\n+").unwrap();
 
-        text = re.replace_all(&text, "").to_string();
+        text = re
+            .replace_all(&text, |caps: &Captures| {
+                if config.ignore_enters && caps[0].matches('\n').count() >= 2 {
+                    return caps[0].to_string();
+                }
+
+                "".to_string()
+            })
+            .to_string()
     }
 
     if config.nl_to_space {
-        let re = if config.ignore_enters {
-            Regex::new(r"\n").unwrap()
+        if config.ignore_enters {
+            let re = Regex::new(r"\S\n\S").unwrap();
+            text = re
+                .replace_all(&text, |caps: &Captures| caps[0].replace('\n', " "))
+                .to_string()
         } else {
-            Regex::new(r"\n+").unwrap()
+            let re = Regex::new(r"\n+").unwrap();
+            text = re.replace_all(&text, " ").to_string();
         };
-
-        text = re.replace_all(&text, " ").to_string();
     }
 
     if config.enter_with_end {
         let re = Regex::new(r"\.\s*[A-Z]").unwrap();
-        let space = Regex::new(r"\s").unwrap();
+
         text = re
             .replace_all(&text, |caps: &Captures| {
-                format!("{}", space.replace(&caps[0], "\n"))
+                if config.ignore_enters && caps[0].matches('\n').count() >= 2 {
+                    return caps[0].to_string();
+                }
+
+                let first_char = caps[0].chars().last().unwrap();
+                format!(".\n{}", first_char)
             })
             .to_string()
     }
