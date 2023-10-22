@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8" />
+    <title>英字論文フォーマッタ (軽量版β)</title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header class="header">
+        <img src="./images/logo.png" class="icon">
+        (軽量版β)
+    </header>
+
+    <hr>
+
+    <div class="main">
+        改行やハイフネーション、特殊記号などの問題からDeepLで正しく翻訳できない英字論文を正しく翻訳できるようにフォーマットするツールです。
+        <br>
+        5000文字以上の長い文章を自動で分割して翻訳する機能もあります。
+        <h3 class="alert">
+            ※ブラウザのポップアップ機能のブロックを解除しないと「DeepLで翻訳」機能が使えません。
+        </h3>
+
+        <p>
+            <input type="button" value="全選択" class="all_select_button" id="check_all">
+            <input type="button" value="全解除" class="all_unselect_button" id="uncheck_all">
+            <input type="button" value="デフォルト" class="to_default_button" id="default">
+        </p>
+        <ul class="without_dot_ul">
+            <li class="without_dot_li">
+                <label for="to_normal">
+                    <input type="checkbox" id="to_normal">
+                    数学用英数字記号→普通の英数字 (例: 𝔸→A)
+                </label>
+            </li>
+            <li class="without_dot_li">
+                <label for="nl_to_space">
+                    <input type="checkbox" id="nl_to_space">
+                    改行→半角スペース
+                </label>
+            </li>
+            <li class="without_dot_li">
+                <label for="restore_word">
+                    <input type="checkbox" id="restore_word">
+                    改行で分割された単語の復元 (例:imple-[改行]ment→implement)
+                </label>
+            </li>
+            <li class="without_dot_li">
+                <label for="ignore_enters">
+                    <input type="checkbox" id="ignore_enters">
+                    2つ以上連続する改行は無視する
+                </label>
+            </li>
+            <li class="without_dot_li">
+                <label for="enter_with_end">
+                    <input type="checkbox" id="enter_with_end">
+                    文末で改行する
+                </label>
+            </li>
+            <li class="without_dot_li">
+                <label for="split">
+                    <input type="checkbox" id="split">
+                    5000文字を超えた場合に分割してDeepLで翻訳する
+                </label>
+            </li>
+            <li class="without_dot_li">
+                <label for="quiet_mode">
+                    <input type="checkbox" id="quiet_mode">
+                    DeepLで翻訳時に新規タブを開くことを確認しない
+                    <span class="alert">(※翻訳後にリロードを行うと確認無しでタブが開きます)</span>
+                </label>
+            </li>
+        </ul>
+
+        <textarea name="target" placeholder="変換前" maxlength="300000" id="target"></textarea>
+        <textarea name="result" placeholder="変換後" readonly id="result"></textarea>
+        <p>
+            <input type="button" value="変換" class="normal_button" id="format">
+            <input type="button" value="DeepLで翻訳" class="normal_button" id="translate">
+            <input type="button" value="リセット" class="alert_button" id="reset">
+        </p>
+        <h3>更新情報</h3>
+        <ul>
+            <li><b>2022/11/02</b> Heroku有料化に伴いRender.comへ移行</li>
+            <li><b>2022/06/20</b> 変換されない特殊文字が存在するバグの修正</li>
+            <li><b>2022/06/11</b> 5000文字を超えた場合に分割してDeepLで翻訳する機能の追加</li>
+        </ul>
+        <br>
+        欲しい機能、バグ報告、質問等あれば<a href="https://github.com/ppputtyo/ToNormalCode">GitHub</a>のissueまでよろしくお願いします。<br>
+        <br>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
