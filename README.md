@@ -2,7 +2,7 @@
 
 # 英字論文フォーマッタ
 
-<hhttps://ppputtyo.github.io/paper-formatter/>
+<https://ppputtyo.github.io/paper-formatter/>
 
 英字論文を DeepL で正しく翻訳されるようにフォーマットするツールです。
 
