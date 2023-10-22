@@ -15,6 +15,12 @@ pub struct Config {
     quiet_mode: bool,
 }
 
+impl Default for Config {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Config {
     pub fn new() -> Config {
         Config {
@@ -35,7 +41,7 @@ impl Config {
 }
 
 fn split_at_multiple<'a>(input: &'a str, positions: &'a [usize]) -> Vec<&'a str> {
-    if positions.len() == 0 {
+    if positions.is_empty() {
         return vec![input];
     }
 
