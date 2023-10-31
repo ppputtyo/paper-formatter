@@ -75,6 +75,14 @@ function format() {
   });
 }
 
+function encode(src){
+  const regex = /\/|\|/i
+  const encoded = src.replace(regex, function(match){
+    return "\\" + match;
+  });
+  return encodeURIComponent(encoded);
+}
+
 function translate() {
   init().then(() => {
     const text = document.getElementById("target").value;
@@ -95,7 +103,7 @@ function translate() {
 
     if (config.quiet_mode) {
       res_arr.forEach((res, i) => {
-        const encoded = encodeURIComponent(res);
+        const encoded = encode(res);
         const url = "https://www.deepl.com/translator#en/ja/" + encoded;
 
         window.open(url, "_blank");
@@ -104,7 +112,7 @@ function translate() {
       let message = res_arr.length + "個のDeepLタブを表示します。";
       if (confirm(message)) {
         res_arr.forEach((res, i) => {
-          const encoded = encodeURIComponent(res);
+          const encoded = encode(res);
           const url = "https://www.deepl.com/translator#en/ja/" + encoded;
 
           window.open(url, "_blank");
