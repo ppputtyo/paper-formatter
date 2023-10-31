@@ -95,7 +95,7 @@ function translate() {
 
     if (config.quiet_mode) {
       res_arr.forEach((res, i) => {
-        const encoded = encodeURI(res);
+        const encoded = encodeURIComponent(res);
         const url = "https://www.deepl.com/translator#en/ja/" + encoded;
 
         window.open(url, "_blank");
@@ -104,7 +104,7 @@ function translate() {
       let message = res_arr.length + "個のDeepLタブを表示します。";
       if (confirm(message)) {
         res_arr.forEach((res, i) => {
-          const encoded = encodeURI(res);
+          const encoded = encodeURIComponent(res);
           const url = "https://www.deepl.com/translator#en/ja/" + encoded;
 
           window.open(url, "_blank");
