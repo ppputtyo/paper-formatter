@@ -76,7 +76,7 @@ function format() {
 }
 
 function encode(src){
-  const regex = /\/|\|/i
+  const regex = /\/|\|/g;
   const encoded = src.replace(regex, function(match){
     return "\\" + match;
   });
