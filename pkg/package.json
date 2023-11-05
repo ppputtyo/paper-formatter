@@ -1,0 +1,14 @@
+{
+  "name": "paper-formatter",
+  "version": "0.1.0",
+  "files": [
+    "paper_formatter_bg.wasm",
+    "paper_formatter.js",
+    "paper_formatter.d.ts"
+  ],
+  "module": "paper_formatter.js",
+  "types": "paper_formatter.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
