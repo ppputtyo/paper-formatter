@@ -104,7 +104,7 @@ pub fn format(text: &str, config: &Config) -> Vec<String> {
                 if config.ignore_enters && caps[0].matches('\n').count() >= 2 {
                     caps[0].to_string()
                 } else {
-                    format!("{}\n{}", caps[1].to_string(), caps[2].to_string())
+                    format!("{}\n{}", &caps[1], &caps[2])
                 }
             })
             .to_string()
