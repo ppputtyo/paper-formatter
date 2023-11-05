@@ -2,11 +2,7 @@ use paper_formatter::{format, Config};
 
 fn main() {
     let special_text = r"
-Test. Te-
-
-st.
-
-Test.";
+I am hoge? No, I am huga.";
     let config = Config {
         to_normal: true,
         restore_word: true,
