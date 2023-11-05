@@ -74,19 +74,21 @@ pub fn format(text: &str, config: &Config) -> Vec<String> {
         text = re
             .replace_all(&text, |caps: &Captures| {
                 if config.ignore_enters && caps[0].matches('\n').count() >= 2 {
-                    return caps[0].to_string();
+                    caps[0].to_string()
+                } else {
+                    "".to_string()
                 }
-
-                "".to_string()
             })
             .to_string()
     }
 
     if config.nl_to_space {
         if config.ignore_enters {
-            let re = Regex::new(r"\S\n\S").unwrap();
+            let re = Regex::new(r"(\S)\n(\S)").unwrap();
             text = re
-                .replace_all(&text, |caps: &Captures| caps[0].replace('\n', " "))
+                .replace_all(&text, |caps: &Captures| {
+                    format!("{} {}", &caps[1], &caps[2])
+                })
                 .to_string()
         } else {
             let re = Regex::new(r"\n+").unwrap();
@@ -95,16 +97,15 @@ pub fn format(text: &str, config: &Config) -> Vec<String> {
     }
 
     if config.enter_with_end {
-        let re = Regex::new(r"\.\s*[A-Z]").unwrap();
+        let re = Regex::new(r"(\.|\?|!)\s*([A-Z])").unwrap();
 
         text = re
             .replace_all(&text, |caps: &Captures| {
                 if config.ignore_enters && caps[0].matches('\n').count() >= 2 {
-                    return caps[0].to_string();
+                    caps[0].to_string()
+                } else {
+                    format!("{}\n{}", &caps[1], &caps[2])
                 }
-
-                let first_char = caps[0].chars().last().unwrap();
-                format!(".\n{}", first_char)
             })
             .to_string()
     }
